@@ -26,6 +26,19 @@ $(document).ready(function(){
 
 function showGifs(topic) {
 
+	var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + topic;
+
+	$.ajax({
+		url: queryURL,
+		method: "GET"
+	})
+	.done(function(response){
+		console.log(response)
+		//Display Gifs
+		var imgSrc = $("<img>");
+		imgSrc.attr("src", response.data.image_url)
+		$("#gifsContainer").append(imgSrc);
+	});
 }
 
 function displayButtons(topics) {
