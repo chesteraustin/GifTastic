@@ -16,12 +16,26 @@ $(document).ready(function(){
 		displayButtons(topics);
 	})
 
-	//Create listener for topic
+	//Create listener for topic buttons
 	$("#topicsContainer").on("click", ".topic-button", function(){
 		var topicSelected = $(this).attr("data-topic");
 		showGifs(topicSelected)
 	})
 
+	//Create listener for image controls
+	$("#gifsContainer").on("click", "img", function(){
+		var playState = $(this).attr("data-state");
+
+		if (playState === "pause"){
+			var newImgSrc = $(this).attr("data-play");
+			$(this).attr("data-state", "play");
+		}
+		else {
+			var newImgSrc = $(this).attr("data-pause");
+			$(this).attr("data-state", "pause");
+		}
+		$(this).attr("src", newImgSrc);
+	})
 })
 
 function showGifs(topic) {
@@ -34,10 +48,17 @@ function showGifs(topic) {
 	})
 	.done(function(response){
 		console.log(response)
+		var gifs = response.data;
+
 		//Display Gifs
-		var imgSrc = $("<img>");
-		imgSrc.attr("src", response.data[0].images.downsized_still.url)
-		$("#gifsContainer").append(imgSrc);
+		for (var i = 0; i < gifs.length; i++){
+			var imgSrc = $("<img>");
+			imgSrc.attr("src", gifs[i].images.downsized_still.url);
+			imgSrc.attr("data-pause", gifs[i].images.downsized_still.url);
+			imgSrc.attr("data-play", gifs[i].images.downsized_medium.url);
+			imgSrc.attr("data-state", "pause");
+			$("#gifsContainer").append(imgSrc);
+		}
 	});
 }
 
