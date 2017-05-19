@@ -22,7 +22,10 @@ $(document).ready(function(){
 		$("#gifsContainer").empty();
 
 		var topicSelected = $(this).attr("data-topic");
-		showGifs(topicSelected)
+		for (var i = 1; i <= 10; i++) {
+			showGifs(topicSelected)
+		}
+
 	})
 
 	//Create listener for image controls
@@ -43,7 +46,7 @@ $(document).ready(function(){
 
 function showGifs(topic) {
 
-	var queryURL = "http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&sort=recent&q=" + encodeURIComponent(topic);
+	var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + encodeURIComponent(topic);
 
 	$.ajax({
 		url: queryURL,
@@ -54,25 +57,24 @@ function showGifs(topic) {
 		var gifs = response.data;
 
 		//Display Gifs
-		for (var i = 0; i < gifs.length; i++){
-			//Create IMAGES
-			var imgSrc = $("<img>");
-			imgSrc.attr("src", gifs[i].images.downsized_still.url);
-			imgSrc.attr("data-pause", gifs[i].images.downsized_still.url);
-			imgSrc.attr("data-play", gifs[i].images.downsized_medium.url);
-			imgSrc.attr("data-state", "pause");
-			imgSrc.addClass("img-responsive");
 
-			//Create DIVs to hold images
-			var newDiv = $("<div>");
-			newDiv.addClass("col-md-3 gifContainer");
+		//Create IMAGES
+		var imgSrc = $("<img>");
+		imgSrc.attr("src", gifs.fixed_height_small_still_url);
+		imgSrc.attr("data-pause", gifs.fixed_height_small_still_url);
+		imgSrc.attr("data-play", gifs.fixed_height_small_url);
+		imgSrc.attr("data-state", "pause");
+		imgSrc.addClass("img-responsive");
 
-			//insert IMAGE to DIV
-			$(newDiv).append(imgSrc);
+		//Create DIVs to hold images
+		var newDiv = $("<div>");
+		newDiv.addClass("col-md-3 gifContainer text-center");
 
-			//insert DIV to CONTAINER
-			$("#gifsContainer").append(newDiv);
-		}
+		//insert IMAGE to DIV
+		$(newDiv).append(imgSrc);
+
+		//insert DIV to CONTAINER
+		$("#gifsContainer").append(newDiv);
 	});
 }
 
