@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 function showGifs(topic) {
 
-	var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + topic;
+	var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + encodeURIComponent(topic);
 
 	$.ajax({
 		url: queryURL,
@@ -51,7 +51,7 @@ function displayButtons(topics) {
 		//Create button
 		newButton = $("<button>");
 		newButton.text(topic);
-		newButton.addClass("topic-button");
+		newButton.addClass("topic-button col-md-12");
 		newButton.attr("data-topic", topic)
 
 		//Append to 
