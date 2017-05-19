@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 function showGifs(topic) {
 
-	var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + encodeURIComponent(topic);
+	var queryURL = "http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&limit=10&sort=recent&q=" + encodeURIComponent(topic);
 
 	$.ajax({
 		url: queryURL,
@@ -36,7 +36,7 @@ function showGifs(topic) {
 		console.log(response)
 		//Display Gifs
 		var imgSrc = $("<img>");
-		imgSrc.attr("src", response.data.image_url)
+		imgSrc.attr("src", response.data[0].images.downsized_still.url)
 		$("#gifsContainer").append(imgSrc);
 	});
 }
