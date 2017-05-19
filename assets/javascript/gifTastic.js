@@ -18,6 +18,9 @@ $(document).ready(function(){
 
 	//Create listener for topic buttons
 	$("#topicsContainer").on("click", ".topic-button", function(){
+		//clear gifsContainer for new images
+		$("#gifsContainer").empty();
+
 		var topicSelected = $(this).attr("data-topic");
 		showGifs(topicSelected)
 	})
@@ -52,12 +55,23 @@ function showGifs(topic) {
 
 		//Display Gifs
 		for (var i = 0; i < gifs.length; i++){
+			//Create IMAGES
 			var imgSrc = $("<img>");
 			imgSrc.attr("src", gifs[i].images.downsized_still.url);
 			imgSrc.attr("data-pause", gifs[i].images.downsized_still.url);
 			imgSrc.attr("data-play", gifs[i].images.downsized_medium.url);
 			imgSrc.attr("data-state", "pause");
-			$("#gifsContainer").append(imgSrc);
+			imgSrc.addClass("img-responsive");
+
+			//Create DIVs to hold images
+			var newDiv = $("<div>");
+			newDiv.addClass("col-md-3 gifContainer");
+
+			//insert IMAGE to DIV
+			$(newDiv).append(imgSrc);
+
+			//insert DIV to CONTAINER
+			$("#gifsContainer").append(newDiv);
 		}
 	});
 }
