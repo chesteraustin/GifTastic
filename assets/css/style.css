@@ -13,3 +13,7 @@ input {
 .gifContainer {
 	margin-bottom: 1rem;
 }
+
+#gifRating {
+	font-weight: bold;
+}

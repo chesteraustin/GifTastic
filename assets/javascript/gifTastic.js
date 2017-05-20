@@ -31,7 +31,10 @@ $(document).ready(function(){
 	//Create listener for image controls
 	$("#gifsContainer").on("click", "img", function(){
 		var playState = $(this).attr("data-state");
+		var gifID = $(this).attr("data-id");
+		getDetails(gifID);
 
+/*
 		if (playState === "pause"){
 			var newImgSrc = $(this).attr("data-play");
 			$(this).attr("data-state", "play");
@@ -41,6 +44,8 @@ $(document).ready(function(){
 			$(this).attr("data-state", "pause");
 		}
 		$(this).attr("src", newImgSrc);
+*/
+
 	})
 })
 
@@ -53,7 +58,7 @@ function showGifs(topic) {
 		method: "GET"
 	})
 	.done(function(response){
-		console.log(response)
+//		console.log(response)
 		var gifs = response.data;
 
 		//Display Gifs
@@ -63,6 +68,7 @@ function showGifs(topic) {
 		imgSrc.attr("src", gifs.fixed_height_small_still_url);
 		imgSrc.attr("data-pause", gifs.fixed_height_small_still_url);
 		imgSrc.attr("data-play", gifs.fixed_height_small_url);
+		imgSrc.attr("data-id", gifs.id);
 		imgSrc.attr("data-state", "pause");
 		imgSrc.addClass("img-responsive");
 
@@ -94,4 +100,28 @@ function displayButtons(topics) {
 		//Append to 
 		$("#topicsContainer").append(newButton);
 	}
+}
+
+function getDetails(gifID){
+	var queryURL = "https://api.giphy.com/v1/gifs/" + gifID + "?api_key=dc6zaTOxFJmzC";
+
+	$.ajax({
+		url: queryURL,
+		method: "GET"
+	})
+	.done(function(response){
+		showModal(response);
+	})	
+}
+
+function showModal(gifDetails_response) {
+	var details = gifDetails_response.data;
+	console.log(details);
+	var id = details.id
+	var title = details.slug.replace("-" + id, '');
+
+	$("#gifTitle").text(title);
+	$("#gifRating").text(details.rating.toUpperCase());
+	$("#modalImg").attr("src", details.images.original.url);
+	$("#gifModal").modal();
 }
