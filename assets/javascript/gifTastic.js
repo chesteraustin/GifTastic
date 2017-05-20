@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 function showGifs(topic) {
 
-	var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + encodeURIComponent(topic);
+	var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" + encodeURIComponent(topic);
 
 	$.ajax({
 		url: queryURL,
