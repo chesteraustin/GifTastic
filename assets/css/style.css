@@ -1,5 +1,6 @@
 body {
 	padding: 1rem;
+	background-color: azure;
 }
 
 button {
@@ -12,6 +13,7 @@ input {
 
 .gifContainer {
 	margin-bottom: 1rem;
+	border: 1px solid darkgray;
 }
 
 #gifRating {

@@ -58,23 +58,24 @@ function showGifs(topic) {
 		method: "GET"
 	})
 	.done(function(response){
-//		console.log(response)
+		console.log(response)
 		var gifs = response.data;
 
 		//Display Gifs
 
 		//Create IMAGES
 		var imgSrc = $("<img>");
-		imgSrc.attr("src", gifs.fixed_height_small_still_url);
-		imgSrc.attr("data-pause", gifs.fixed_height_small_still_url);
-		imgSrc.attr("data-play", gifs.fixed_height_small_url);
+		imgSrc.attr("src", gifs.fixed_width_small_still_url);
+		imgSrc.attr("data-pause", gifs.fixed_width_small_still_url);
+		imgSrc.attr("data-play", gifs.fixed_width_small_url);
 		imgSrc.attr("data-id", gifs.id);
 		imgSrc.attr("data-state", "pause");
-		imgSrc.addClass("img-responsive");
+		imgSrc.addClass("img-fluid align-middle");
 
 		//Create DIVs to hold images
 		var newDiv = $("<div>");
-		newDiv.addClass("col-md-3 gifContainer text-center");
+		newDiv.attr("style", "min-height:100px;");
+		newDiv.addClass("col-md-4 gifContainer text-center");
 
 		//insert IMAGE to DIV
 		$(newDiv).append(imgSrc);
